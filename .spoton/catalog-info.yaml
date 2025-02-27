@@ -1,0 +1,16 @@
+# https://backstage.io/docs/features/software-catalog/descriptor-format#kind-component
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: terraform-spacelift-cloud-infrastructure-automation
+  description: |
+    CP module fork fo Spacelift
+  annotations:
+    spoton.com/domain: domain:default/infrastructure
+    spoton.com/subdomain: domain:default/cloud-and-traffic
+    github.com/project-slug: spotoninc/terraform-spacelift-cloud-infrastructure-automation
+
+spec:
+  type: library
+  owner: group:default/cloud-and-traffic
+  lifecycle: production

@@ -1,0 +1,12 @@
+_commit: v1.2.5
+_src_path: https://github.com/SpotOnInc/copier-catalog-info
+description: CP module fork fo Spacelift
+domain: domain:default/infrastructure
+generate_techdocs: false
+lifecycle: production
+links: []
+owner: group:default/cloud-and-traffic
+repo_url: SpotOnInc/terraform-spacelift-cloud-infrastructure-automation
+subdomain: domain:default/cloud-and-traffic
+tags: []
+template_type: library
