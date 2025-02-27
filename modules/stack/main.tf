@@ -32,10 +32,11 @@ resource "spacelift_stack" "default" {
   enable_local_preview         = var.local_preview_enabled
   terraform_smart_sanitization = var.terraform_smart_sanitization
 
-  worker_pool_id      = var.worker_pool_id
-  runner_image        = var.runner_image
-  terraform_version   = var.terraform_version
-  terraform_workspace = var.terraform_workspace
+  worker_pool_id          = var.worker_pool_id
+  runner_image            = var.runner_image
+  terraform_version       = var.terraform_version
+  terraform_workspace     = var.terraform_workspace
+  terraform_workflow_tool = var.terraform_workflow_tool
 
   after_apply    = var.after_apply
   after_destroy  = var.after_destroy

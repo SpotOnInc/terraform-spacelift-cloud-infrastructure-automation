@@ -52,11 +52,11 @@ locals {
     }
   }
 
-  # The `spacelift_stacks` variable only contains `admin`, `non_admin`, and `first_admin` stacks. 
-  # Therefore, the `current_admin_stack` configuration may not always be present in this variable. 
-  # This intentional behavior prevents the `current_admin_stack` from recreating its stack and space, 
+  # The `spacelift_stacks` variable only contains `admin`, `non_admin`, and `first_admin` stacks.
+  # Therefore, the `current_admin_stack` configuration may not always be present in this variable.
+  # This intentional behavior prevents the `current_admin_stack` from recreating its stack and space,
   # as it would result in duplicate stacks and spaces already created for other `admin_stack` or `first_admin_stack`.
-  # If a recreation occurs, no error message will be thrown, but instead, duplicate spaces and stacks 
+  # If a recreation occurs, no error message will be thrown, but instead, duplicate spaces and stacks
   # with the same names and labels will be created.
   # This duplication could cause issues such as:
   # * competing CRUD operations on the same TF resources or creating unnecessary duplicates resources if duplicated stacks exist.
@@ -165,7 +165,12 @@ module "stacks" {
   repository            = coalesce(try(each.value.settings.spacelift.repository, null), var.repository)
   commit_sha            = var.commit_sha != null ? var.commit_sha : try(each.value.settings.spacelift.commit_sha, null)
   spacelift_run_enabled = coalesce(try(each.value.settings.spacelift.spacelift_run_enabled, null), var.spacelift_run_enabled)
-  terraform_version     = lookup(var.terraform_version_map, try(each.value.settings.spacelift.terraform_version, ""), var.terraform_version)
+  terraform_version     =  coalesce(try(each.value.settings.spacelift.terraform_workflow_tool, null), var.terraform_workflow_tool) != "CUSTOM" ? try(
+    var.terraform_version_map[each.value.settings.spacelift.terraform_version], var.terraform_version
+  ) : null
+
+  terraform_workflow_tool = coalesce(try(each.value.settings.spacelift.terraform_workflow_tool, null), var.terraform_workflow_tool)
+
   component_root        = coalesce(try(each.value.settings.spacelift.component_root, null), format("%s/%s", var.components_path, coalesce(each.value.base_component, each.value.component)))
   local_preview_enabled = try(each.value.settings.spacelift.local_preview_enabled, null) != null ? each.value.settings.spacelift.local_preview_enabled : var.local_preview_enabled
   administrative        = try(each.value.settings.spacelift.administrative, null) != null ? each.value.settings.spacelift.administrative : var.administrative
