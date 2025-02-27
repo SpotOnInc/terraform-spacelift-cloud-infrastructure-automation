@@ -165,7 +165,9 @@ module "stacks" {
   repository            = coalesce(try(each.value.settings.spacelift.repository, null), var.repository)
   commit_sha            = var.commit_sha != null ? var.commit_sha : try(each.value.settings.spacelift.commit_sha, null)
   spacelift_run_enabled = coalesce(try(each.value.settings.spacelift.spacelift_run_enabled, null), var.spacelift_run_enabled)
-  terraform_version     = try(var.terraform_version_map[each.value.settings.spacelift.terraform_version], var.terraform_version)
+  terraform_version     =  coalesce(try(each.value.settings.spacelift.terraform_workflow_tool, null), var.terraform_workflow_tool) != "CUSTOM" ? try(
+    var.terraform_version_map[each.value.settings.spacelift.terraform_version], var.terraform_version
+  ) : null
 
   terraform_workflow_tool = coalesce(try(each.value.settings.spacelift.terraform_workflow_tool, null), var.terraform_workflow_tool)
 
