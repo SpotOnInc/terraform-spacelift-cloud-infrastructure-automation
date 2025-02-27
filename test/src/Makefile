@@ -16,7 +16,7 @@ init:
 ## Run tests
 test: init
 	go mod download
-	go test -v -timeout 20m -run TestExamplesComplete
+	go test ./... -v -timeout 20m
 
 ## Run tests in docker container
 docker/test:
@@ -27,4 +27,4 @@ docker/test:
 .PHONY : clean
 ## Clean up files
 clean:
-	rm -rf ../../examples/complete/*.tfstate*
+	rm -rf ../../examples/*/*.tfstate*
