@@ -5,7 +5,7 @@
 ####
 ## Provider without arguments and running inside Spacelift
 ####
-## The `spacelift_current_stack` and `spacelift_current_space` data resources are designed to work within Spacelift 
+## The `spacelift_current_stack` and `spacelift_current_space` data resources are designed to work within Spacelift
 ## when the provider has been defined without arguments. For example:
 ##
 ##  provider "spacelift" {}
@@ -29,7 +29,7 @@
 ##  Error: unexpected token issuer api-key, is this a Spacelift run?
 ##
 ## This error would be through even if the code is getting executed inside of Spacelift.
-## In this case, `spacelift_stacks` and `spacelift_contexts` data resources should be used instead to retrieve 
+## In this case, `spacelift_stacks` and `spacelift_contexts` data resources should be used instead to retrieve
 ## information about `current_admin_stack`'s configuration.
 ####
 
@@ -86,8 +86,8 @@ locals {
       labels     = v.labels
       stack_name = local.spacelift_stacks_extra_args[k].stack_name
 
-      # The first_admin_stack is responsible for creating its own stack and space. This is different from 
-      # other admin stacks, which have their stacks and spaces created by 
+      # The first_admin_stack is responsible for creating its own stack and space. This is different from
+      # other admin stacks, which have their stacks and spaces created by
       # the first_admin_stack's or previous_admin_stacks' runs.
       is_first_admin_stack = sha1(jsonencode(try(v.vars.tags, {}))) == sha1(jsonencode(var.tag_filters))
     }
@@ -96,7 +96,7 @@ locals {
 
   current_admin_stack_id = try(
     data.spacelift_current_stack.administrative[0].id,
-    try(data.spacelift_stacks.administrative[0].stacks[0].stack_id, null)
+    try(data.spacelift_stacks.administrative[0].stacks[0].stack_id, "")
   )
 
   current_admin_stack = merge(local.current_admin_stack_config, {
