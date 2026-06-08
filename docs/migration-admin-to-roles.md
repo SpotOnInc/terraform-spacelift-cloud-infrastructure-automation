@@ -197,9 +197,9 @@ vars:
 
 The `write_login_access_github_teams` and `admin_login_access_github_teams` values are inherited from the admin stack's existing `_spacelift-space.yaml` vars — no per-stack YAML changes required.
 
-### Login policy update
+### Login policy
 
-The `template-rego-policies/login.github.rego` template now includes label-based `space_write` / `space_admin` rules that match `write_access_github_team:<team>` and `admin_access_github_team:<team>` labels on dedicated spaces. The existing single login policy covers all dedicated spaces with no extra policies needed.
+No changes to `login.github.rego` are needed. Spacelift's space hierarchy cascades access: a user with `space_admin` on the admin stack's managed space automatically has admin on all child dedicated spaces. The `write_access_github_team:<t>` / `admin_access_github_team:<t>` labels on dedicated spaces are metadata only (useful for auditing/future Rego), not consumed by the login policy.
 
 ### Validation
 
